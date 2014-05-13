@@ -65,28 +65,61 @@ casper.open(casper.cli.get('url'));
 /* Viewport declaration
 --------------------------------------------------------------------------- */
 casper.then( function () {
-    var meta_vp = this.evaluate( function () {
-        var vp = $('meta[name="viewport"]');
+    var meta = this.evaluate( function () {
 
-        if ( vp.length ) {
-            return {
-                'status': true,
-                'content': vp.attr('content')
-            };
-        } else {
-            return {
-                'status': false
-            };
-        }
+        var check = {
+
+            description: function () {
+                var el = $('meta[name="description"]');
+
+                if ( el.length ) {
+                    return {
+                        'status': true,
+                        'content': el.attr('content')
+                    };
+                } else {
+                    return {
+                        'status': false
+                    };
+                }
+            },
+
+            vp: function () {
+                var el = $('meta[name="viewport"]');
+
+                if ( el.length ) {
+                    return {
+                        'status': true,
+                        'content': vp.attr('content')
+                    };
+                } else {
+                    return {
+                        'status': false
+                    };
+                }
+            }
+
+        };
+
+        return {
+            'description': check.description(),
+            'viewport': check.vp()
+        };
 
     });
 
-    title('Meta viewport');
+    title('Necessary meta tag');
 
-    if ( meta_vp.status ) {
-        info('  - is specified: ' + meta_vp.content);
-    } else if ( !meta_vp.status ) {
-        warn('  - is not specified');
+    if ( meta.description.status ) {
+        info('  - Description: ' + meta.description.content);
+    } else if ( !meta.status ) {
+        warn('  - Description: Fail');
+    }
+
+    if ( meta.viewport.status ) {
+        info('  - Viewport: ' + meta.viewport.content);
+    } else {
+        warn('  - Viewport: not specified');
     }
 });
 

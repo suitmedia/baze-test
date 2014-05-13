@@ -3,7 +3,7 @@
 --------------------------------------------------------------------------- */
 
 var casper_options = {
-    clientScripts: ['assets/jquery.js']
+    clientScripts: ['./bower_components/jquery/dist/jquery.min.js']
   // , verbose: true
   // , logLevel: 'debug'
 };

@@ -14,6 +14,13 @@ baze-test
 2. Clone the repository `git clone git@github.com:Suitmedia/baze-test.git`
 3. Install project dependencies with `npm install` and `bower install`
 4. Start testing remote URL by doing `casperjs check.js --url=http://example.com`
+5. Sit back and you got pretty report
+
+## Result example
+
+> casperjs check.js --url=http://example.com
+
+![result](http://bobby.suitmedia.net/assets/img/baze-test-1.jpg)
 
 ## Test coverage
 

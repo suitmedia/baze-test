@@ -18,7 +18,7 @@ baze-test
 
 ## Result example
 
-> casperjs check.js --url=http://example.com
+> casperjs check.js --url=http://suitmedia.com
 
 ![result](http://bobby.suitmedia.net/assets/img/baze-test-1.jpg)
 

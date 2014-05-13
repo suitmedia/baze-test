@@ -1,0 +1,20 @@
+{
+  "name": "baze-test",
+  "version": "0.1.0",
+  "authors": "Suitmedia",
+  "description": "Baze Test is a testing tool by Suitmedia",
+  "lisence": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Suitmedia/baze-test"
+  },
+  "dependencies": {
+    "gulp-csslint": "~0.1.4",
+    "gulp": "~3.6.2",
+    "gulp-jshint": "~1.5.5",
+    "gulp-util": "~2.2.14",
+    "gulp-imagemin": "~0.5.0",
+    "cli-color": "~0.3.2",
+    "request": "~2.34.0"
+  }
+}

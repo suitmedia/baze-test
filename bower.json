@@ -1,0 +1,14 @@
+{
+  "name": "baze-test",
+  "version": "0.1.0",
+  "authors": "Suitmedia",
+  "description": "Baze Test is a testing tool by Suitmedia",
+  "lisence": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Suitmedia/baze-test"
+  },
+  "dependencies": {
+    "jquery": "~2.1.1"
+  }
+}

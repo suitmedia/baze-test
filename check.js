@@ -59,6 +59,8 @@ casper.then( function () {
     drawLine();
 });
 
+casper.open(casper.cli.get('url'));
+
 
 /* Viewport declaration
 --------------------------------------------------------------------------- */

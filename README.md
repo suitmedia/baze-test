@@ -24,7 +24,7 @@ baze-test
 
 ## Test coverage
 
-* Meta viewport declaration
+* Meta tags
 * Favicon
 * Aria landmark
 * i18n

@@ -59,8 +59,6 @@ casper.then( function () {
     drawLine();
 });
 
-casper.open(casper.cli.get('url'));
-
 
 /* Viewport declaration
 --------------------------------------------------------------------------- */
@@ -306,6 +304,46 @@ casper.then( function () {
         warn('  - Language is not specified');
     }
 });
+
+
+/* Images with alt
+--------------------------------------------------------------------------- */
+
+casper.then( function () {
+    var images = this.evaluate( function () {
+        var img              = $('img'),
+            img_length       = img.length,
+
+            img_alt         = [],
+            img_href        = [],
+
+            img_alt_count   = 0;
+
+        for (var i = img_length - 1; i >= 0; i--) {
+            var _this = img.eq(i);
+
+            if ( _this.attr('alt') ) {
+                img_alt.push(_this.attr('alt'));
+                img_alt_count++;
+            } else {
+                img_href.push(_this.attr('src'));
+            }
+        };
+
+        return {
+            'length'    : img_length,
+            'altCount'  : img_alt_count,
+            'noAltCount': img_length - img_alt_count,
+            'noAltSrc'  : img_href
+        };
+    });
+
+    title('Images');
+
+    info('  - Total images: ' + images.length);
+    warn('  - Images with no alt text: ' + images.noAltCount);
+});
+
 
 
 /* Testing end

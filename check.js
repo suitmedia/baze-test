@@ -90,7 +90,7 @@ casper.then( function () {
                 if ( el.length ) {
                     return {
                         'status': true,
-                        'content': vp.attr('content')
+                        'content': el.attr('content')
                     };
                 } else {
                     return {

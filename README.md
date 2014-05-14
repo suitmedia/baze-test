@@ -28,4 +28,5 @@ baze-test
 * Favicon
 * Aria landmark
 * i18n
+* Images validation
 * more to come

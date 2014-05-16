@@ -36,7 +36,7 @@ gulp.task('css-lint', function () {
     };
 
     return gulp
-        .src('test/css/*.css')
+        .src('./css/*.css')
         .pipe(cssLint(options))
         .pipe(cssLint.reporter());
 
@@ -49,7 +49,7 @@ gulp.task('css-lint', function () {
 gulp.task('js-hint', function () {
 
     return gulp
-        .src('test/js/*.js')
+        .src('./js/*.js')
         .pipe(jsHint())
         .pipe(jsHint.reporter());
 

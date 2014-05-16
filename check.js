@@ -29,12 +29,20 @@ function title(text) {
     return casper.echo('# ' + text, 'PARAMETER');
 }
 
+function param(text) {
+    return casper.echo(text, 'PARAMETER');
+}
+
 function info(text) {
     return casper.echo(text, 'INFO');
 }
 
 function warn(text) {
     return casper.echo(text, 'WARNING');
+}
+
+function comment(text) {
+    return casper.echo(text, 'COMMENT');
 }
 
 
@@ -62,6 +70,7 @@ casper.then( function () {
 
 /* Viewport declaration
 --------------------------------------------------------------------------- */
+
 casper.then( function () {
     var meta = this.evaluate( function () {
 
@@ -344,6 +353,99 @@ casper.then( function () {
     warn('  - Images with no alt text: ' + images.noAltCount);
 });
 
+
+/* Get assets
+--------------------------------------------------------------------------- */
+
+casper.then( function () {
+    var assets = this.evaluate( function () {
+        var _css_arr        = [],
+            _css_arr_name   = [],
+            _js_arr         = [],
+            _js_arr_name    = [];
+
+        var _asset = {
+
+            css: function () {
+                var el          = $('link[rel="stylesheet"]'),
+                    el_length   = el.length;
+
+                if ( !el_length ) {
+                    return false;
+                }
+
+                for (var i = 0; i < el_length; i++) {
+                    var _this       = el.eq(i),
+                        _this_src   = _this.attr('href'),
+                        _this_name  = /[^//]*\.(css)/g.exec(_this_src);
+
+                    _css_arr.push(_this_src);
+                    _css_arr_name.push(_this_name);
+                };
+
+                return {
+                    'css_array': _css_arr,
+                    'css_source': _css_arr_name
+                };
+            },
+
+            js: function () {
+                var el          = $('script[src]'),
+                    el_length   = el.length;
+
+                if ( !el_length ) {
+                    return false;
+                }
+
+                for (var i = 0; i < el_length; i++) {
+                    var _this       = el.eq(i),
+                        _this_src   = _this.attr('src'),
+                        _this_name  = /[^//]*\.(js)/g.exec(_this_src);
+
+                    _js_arr.push(_this_src);
+                    _js_arr_name.push(_this_name);
+                };
+
+                return {
+                    'js_array': _js_arr,
+                    'js_source': _js_arr_name
+                };
+            }
+
+        };
+
+        return {
+            'css': _asset.css(),
+            'js': _asset.js()
+        }
+    });
+
+    var assets_css      = assets.css.css_array,
+        assets_css_src  = assets.css.css_source,
+
+        assets_js       = assets.js.js_array,
+        assets_js_src   = assets.js.js_source;
+
+    title('Assets');
+    info('  - External stylesheet: ' + assets_css.length);
+    info('  - External script: ' + assets_js.length);
+
+    for ( var i = 0; i < assets_css.length; i++ ) {
+        var _this       = assets_css[i],
+            _this_name  = assets_css_src[i].toString().slice(0,-4);
+
+        casper.download(_this, 'css/' + _this_name);
+    }
+
+    for ( var i = 0; i < assets_js.length; i++ ) {
+        var _this       = assets_js[i],
+            _this_name  = assets_js_src[i].toString().slice(0,-3);
+
+        if ( _this_name.indexOf('jquery') ) {
+            casper.download(_this, 'js/' + _this_name);
+        }
+    }
+});
 
 
 /* Testing end

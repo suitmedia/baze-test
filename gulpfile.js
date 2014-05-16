@@ -51,7 +51,7 @@ gulp.task('js-hint', function () {
     return gulp
         .src('./js/*.js')
         .pipe(jsHint())
-        .pipe(jsHint.reporter());
+        .pipe(jsHint.reporter('jshint-stylish'));
 
 });
 

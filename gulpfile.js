@@ -8,7 +8,7 @@
    ------------------------------------------------------------------------ */
 
 var gulp        = require('gulp'),
-    gUtil       = require('gulp-util'),
+    gutil       = require('gulp-util'),
 
     // CSS Lint
     cssLint     = require('gulp-csslint'),
@@ -23,6 +23,19 @@ var gulp        = require('gulp'),
 /* CSS Lint
 --------------------------------------------------------------------------- */
 
+var cssLintReporter = function (file) {
+    gutil.log()
+    gutil.log(gutil.colors.cyan(file.csslint.errorCount)+' errors in '+gutil.colors.magenta(file.path));
+
+    file.csslint.results.forEach(function(result) {
+        gutil.log(gutil.colors.gray('line: ' + result.error.line));
+        gutil.log('\t' + gutil.colors.blue(result.error.message));
+        gutil.log('');
+    });
+
+    gutil.log('CSS lint result: ' + gutil.colors.red('✖ ' + file.csslint.errorCount + ' problems'));
+};
+
 gulp.task('css-lint', function () {
     var options = {
         'box-sizing'                : false,    // no longer support IE7 
@@ -32,13 +45,14 @@ gulp.task('css-lint', function () {
         'gradients'                 : false,    // handled by autoprefixer
         'vendor-prefix'             : false,    // handled by autoprefixer
         'box-model'                 : false,    // border-box specified
-        'known-properties'          : false
+        'known-properties'          : false,
+        'floats'                    : false
     };
 
     return gulp
         .src('./css/*.css')
         .pipe(cssLint(options))
-        .pipe(cssLint.reporter());
+        .pipe(cssLint.reporter(cssLintReporter));
 
 });
 

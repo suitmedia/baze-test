@@ -16,6 +16,10 @@ baze-test
 4. Start testing remote URL by doing `casperjs check.js --url=http://example.com`
 5. Sit back and you got pretty report
 
+### CSSLint and JSHint
+
+`gulp lint` to run CSSLint and JSHint test after running `casperjs check.js --url=http://example.com`
+
 ## Result example
 
 > casperjs check.js --url=http://suitmedia.com
@@ -29,4 +33,6 @@ baze-test
 * Aria landmark
 * i18n
 * Images validation
+* [CSSLint](https://github.com/CSSLint/csslint)
+* [jshint](https://github.com/jshint/jshint/)
 * more to come

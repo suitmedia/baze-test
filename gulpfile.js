@@ -24,8 +24,9 @@ var gulp        = require('gulp'),
 --------------------------------------------------------------------------- */
 
 var cssLintReporter = function (file) {
-    gutil.log()
-    gutil.log(gutil.colors.cyan(file.csslint.errorCount)+' errors in '+gutil.colors.magenta(file.path));
+    gutil.log();
+    gutil.log(gutil.colors.magenta(file.path));
+    gutil.log('--------------------------------------------------\n');
 
     file.csslint.results.forEach(function(result) {
         gutil.log(gutil.colors.gray('line: ' + result.error.line));

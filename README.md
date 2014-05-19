@@ -7,6 +7,7 @@ baze-test
 
 * [PhantomJS](http://phantomjs.org/)
 * [CasperJS](http://casperjs.org/)
+* [Gulp](http://gulpjs.com/)
 
 ## How to use
 

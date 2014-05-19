@@ -14,10 +14,7 @@ var gulp        = require('gulp'),
     cssLint     = require('gulp-csslint'),
 
     // JS Hint
-    jsHint      = require('gulp-jshint'),
-
-    // Image min
-    imageMin    = require('gulp-imagemin');
+    jsHint      = require('gulp-jshint');
 
 
 /* CSS Lint
@@ -76,16 +73,4 @@ gulp.task('js-hint', function () {
 
 gulp.task('lint', function () {
     gulp.start('css-lint', 'js-hint');
-});
-
-
-/* Optimize image
---------------------------------------------------------------------------- */
-
-gulp.task('image-min', function () {
-
-    return gulp
-        .src(['img/*.jpg', 'img/*.png', 'img/*.gif'])
-        .pipe(imageMin());
-
 });

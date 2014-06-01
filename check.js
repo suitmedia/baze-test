@@ -113,89 +113,20 @@ casper.then( function () {
 --------------------------------------------------------------------------- */
 
 casper.then( function () {
-    var Landmark = this.evaluate( function () {
-
-        var role = {
-
-            banner: function () {
-                var _banner = $('[role="banner"]');
-
-                if ( _banner.length ) return true;
-                return false;
-            },
-
-            main: function () {
-                var _main = $('[role="main"]');
-
-                if ( _main.length ) return true;
-                return false;
-            },
-
-            contentinfo: function () {
-                var _contentinfo = $('[role="contentinfo"]');
-
-                if ( _contentinfo.length ) return true;
-                return false;
-            },
-
-            navigation: function () {
-                var _navigation = $('[role="navigation"]');
-
-                if ( _navigation.length ) return true;
-                return false;
-            },
-
-            search: function () {
-                var _search = $('[role="search"]');
-
-                if ( _search.length ) return true;
-                return false;
-            }
-
-        };
-
-        return {
-            'banner': role.banner(),
-            'main': role.main(),
-            'contentinfo': role.contentinfo(),
-            'navigation': role.navigation(),
-            'search': role.search()
-        };
-
-
-    });
+    var arr_role        = ['banner', 'main', 'contentinfo', 'navigation', 'search'],
+        arr_role_length = arr_role.length;
 
     title('ARIA Landmark');
-    
-    if ( Landmark.banner ) {
-        info('  - Banner');
-    } else {
-        warn('  - Banner');
-    }
-    
-    if ( Landmark.main ) {
-        info('  - Main');
-    } else {
-        warn('  - Main');
-    }
-    
-    if ( Landmark.contentinfo ) {
-        info('  - Contentinfo');
-    } else {
-        warn('  - Contentinfo');
-    }
-    
-    if ( Landmark.navigation ) {
-        info('  - Navigation');
-    } else {
-        warn('  - Navigation');
-    }
-    
-    if ( Landmark.search ) {
-        info('  - Search');
-    } else {
-        warn('  - Search');
-    }
+
+    for (var i = arr_role_length - 1; i >= 0; i--) {
+        var _current = '[role="' + arr_role[i] + '"]';
+
+        if ( this.exists(_current) ) {
+            info('  - ' + arr_role[i]);
+        } else {
+            warn('  - ' + arr_role[i]);
+        }
+    };
 });
 
 

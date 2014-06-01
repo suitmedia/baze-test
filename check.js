@@ -134,65 +134,40 @@ casper.then( function () {
 --------------------------------------------------------------------------- */
 
 casper.then( function () {
-    var i18n = this.evaluate( function () {
-
-        var check = {
-
-            encode: function () {
-                var meta1 = $('meta[charset]');
-                var meta2 = $('meta[content*="charset"]');
-
-                if ( meta1.length ) {
-                    return {
-                        'status': true,
-                        'content': meta1.attr('charset')
-                    };
-                } else if ( meta2.length ) {
-                    return {
-                        'status': true,
-                        'content': meta2.attr('content')
-                    };
-                } else {
-                    return {
-                        'status': false
-                    };
-                }
-
-            },
-
-            language: function () {
-                var lang = $('html[lang]');
-
-                if ( lang.length ) {
-                    return {
-                        'status': true,
-                        'content': lang.attr('lang')
-                    };
-                }
-
-                return false;
-            }
-
-        };
-
-        return {
-            'encode': check.encode(),
-            'language': check.language()
-        };
-    });
+    var lang            = 'html[lang]',
+        arr_charset     = ['meta[charset]', 'meta[http-equiv]'],
+        charsetExist    = 0;
 
     title('Internationalization');
 
-    if ( i18n.encode.status ) {
-        info('  - Character encoding is specified: ' + i18n.encode.content);
-    } else {
-        warn('  - Character encoding is not specified');
-    }
+    if ( this.exists(lang) ) {
+        var content = this.getElementAttribute(lang, 'lang');
 
-    if ( i18n.language.status ) {
-        info('  - Language is specified: ' + i18n.language.content);
+        info('  - Language is specified: ' + content);
     } else {
         warn('  - Language is not specified');
+    }
+
+    for (var i = arr_charset.length - 1; i >= 0; i--) {
+        var curr    = arr_charset[i];
+
+        if ( this.exists(curr) ) {
+            /* 
+             *  2 ways to declare charset
+             *  http://goo.gl/2hpW3P
+             */ 
+            var curr_opt1   = this.getElementAttribute(curr, 'charset'),
+                curr_opt2   = this.getElementAttribute(curr, 'content'),
+                content = curr_opt1 || curr_opt2;
+
+            info('  - Character encoding is specified: ' + content);
+            charsetExist = 1;
+            break;
+        }
+    };
+
+    if ( charsetExist === 0 ) {
+        warn('  - Character encoding is not specified');
     }
 });
 

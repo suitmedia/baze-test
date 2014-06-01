@@ -201,38 +201,25 @@ casper.then( function () {
 --------------------------------------------------------------------------- */
 
 casper.then( function () {
-    var images = this.evaluate( function () {
-        var img              = $('img'),
-            img_length       = img.length,
+    var img     = this.getElementsInfo('img'),
+        arr_alt = [],
+        no_alt  = 0;
 
-            img_alt         = [],
-            img_href        = [],
-
-            img_alt_count   = 0;
-
-        for (var i = img_length - 1; i >= 0; i--) {
-            var _this = img.eq(i);
-
-            if ( _this.attr('alt') ) {
-                img_alt.push(_this.attr('alt'));
-                img_alt_count++;
-            } else {
-                img_href.push(_this.attr('src'));
-            }
-        };
-
-        return {
-            'length'    : img_length,
-            'altCount'  : img_alt_count,
-            'noAltCount': img_length - img_alt_count,
-            'noAltSrc'  : img_href
-        };
-    });
+    if ( !img.length ) return;
 
     title('Images');
 
-    info('  - Total images: ' + images.length);
-    warn('  - Images with no alt text: ' + images.noAltCount);
+    for (var i = img.length - 1; i >= 0; i--) {
+        var curr        = img[i],
+            curr_alt    = curr['attributes']['alt'];
+
+        if ( curr_alt === '' ) {
+            no_alt += 1;
+        }
+    };
+
+    info('  - Total images: ' + img.length);
+    warn('  - Images with no alt text: ' + no_alt);
 });
 
 

@@ -72,59 +72,19 @@ casper.then( function () {
 --------------------------------------------------------------------------- */
 
 casper.then( function () {
-    var meta = this.evaluate( function () {
-
-        var check = {
-
-            description: function () {
-                var el = $('meta[name="description"]');
-
-                if ( el.length ) {
-                    return {
-                        'status': true,
-                        'content': el.attr('content')
-                    };
-                } else {
-                    return {
-                        'status': false
-                    };
-                }
-            },
-
-            vp: function () {
-                var el = $('meta[name="viewport"]');
-
-                if ( el.length ) {
-                    return {
-                        'status': true,
-                        'content': el.attr('content')
-                    };
-                } else {
-                    return {
-                        'status': false
-                    };
-                }
-            }
-
-        };
-
-        return {
-            'description': check.description(),
-            'viewport': check.vp()
-        };
-
-    });
+    var meta_desc   = 'meta[name="description"]',
+        meta_vp     = 'meta[name="viewport"]';
 
     title('Necessary meta tag');
 
-    if ( meta.description.status ) {
-        info('  - Description: ' + meta.description.content);
-    } else if ( !meta.status ) {
-        warn('  - Description: Fail');
+    if ( this.exists(meta_desc) ) {
+        info('  - Description: ' + this.getElementAttribute(meta_desc, 'content'));
+    } else {
+        warn('  - Description: not specified');
     }
 
-    if ( meta.viewport.status ) {
-        info('  - Viewport: ' + meta.viewport.content);
+    if ( this.exists(meta_vp) ) {
+        info('  - Viewport: ' + this.getElementAttribute(meta_vp, 'content'));
     } else {
         warn('  - Viewport: not specified');
     }

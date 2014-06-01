@@ -126,7 +126,7 @@ casper.then( function () {
         } else {
             warn('  - ' + arr_role[i]);
         }
-    };
+    }
 });
 
 
@@ -164,7 +164,7 @@ casper.then( function () {
             charsetExist = 1;
             break;
         }
-    };
+    }
 
     if ( charsetExist === 0 ) {
         warn('  - Character encoding is not specified');
@@ -177,7 +177,6 @@ casper.then( function () {
 
 casper.then( function () {
     var img     = this.getElementsInfo('img'),
-        arr_alt = [],
         no_alt  = 0;
 
     if ( !img.length ) return;
@@ -186,12 +185,12 @@ casper.then( function () {
 
     for (var i = img.length - 1; i >= 0; i--) {
         var curr        = img[i],
-            curr_alt    = curr['attributes']['alt'];
+            curr_alt    = curr.attributes.alt;
 
         if ( curr_alt === '' ) {
             no_alt += 1;
         }
-    };
+    }
 
     info('  - Total images: ' + img.length);
     warn('  - Images with no alt text: ' + no_alt);
@@ -225,7 +224,7 @@ casper.then( function () {
 
                     _css_arr.push(_this_src);
                     _css_arr_name.push(_this_name);
-                };
+                }
 
                 return {
                     'css_array': _css_arr,
@@ -248,7 +247,7 @@ casper.then( function () {
 
                     _js_arr.push(_this_src);
                     _js_arr_name.push(_this_name);
-                };
+                }
 
                 return {
                     'js_array': _js_arr,
@@ -261,7 +260,7 @@ casper.then( function () {
         return {
             'css': _asset.css(),
             'js': _asset.js()
-        }
+        };
     });
 
     var assets_css      = assets.css.css_array,

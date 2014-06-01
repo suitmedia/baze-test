@@ -68,7 +68,7 @@ casper.then( function () {
 });
 
 
-/* Viewport declaration
+/* Meta declaration
 --------------------------------------------------------------------------- */
 
 casper.then( function () {
@@ -95,23 +95,14 @@ casper.then( function () {
 --------------------------------------------------------------------------- */
 
 casper.then( function () {
-    var favicon = this.evaluate( function () {
-        var _favicon = $('link[rel*="icon"]');
-
-        if ( _favicon.length ) {
-            return {
-                'status': true,
-                'content': _favicon.attr('href')
-            };
-        }
-
-        return false;
-    });
+    var favicon = 'link[rel*="icon"]';
 
     title('Favicon');
 
-    if ( favicon.status ) {
-        info('  - Favicon is specified: ' + favicon.content);
+    if ( this.exists(favicon) ) {
+        var favicon_href = this.getElementAttribute(favicon, 'href');
+
+        info('  - Favicon is specified: ' + favicon_href);
     } else {
         warn('  - No favicon specified');
     }

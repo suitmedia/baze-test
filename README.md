@@ -16,6 +16,7 @@ baze-test
 3. Install project dependencies with `npm install` and `bower install`
 4. Start testing remote URL by doing `casperjs check.js --url=http://example.com`
 5. Sit back and you got pretty report
+6. run `gulp clean` to conduct new test
 
 ### CSSLint and JSHint
 

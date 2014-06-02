@@ -9,6 +9,7 @@
 
 var gulp        = require('gulp'),
     gutil       = require('gulp-util'),
+    clean       = require('gulp-clean'),
 
     // CSS Lint
     cssLint     = require('gulp-csslint'),
@@ -65,6 +66,16 @@ gulp.task('js-hint', function () {
         .pipe(jsHint())
         .pipe(jsHint.reporter('jshint-stylish'));
 
+});
+
+
+/* Clean
+--------------------------------------------------------------------------- */
+
+gulp.task('clean', function () {
+    return gulp
+        .src(['./css/', './js/'], {read: false})
+        .pipe(clean());
 });
 
 

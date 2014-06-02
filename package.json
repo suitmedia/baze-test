@@ -9,12 +9,13 @@
     "url": "https://github.com/Suitmedia/baze-test"
   },
   "dependencies": {
-    "gulp-csslint": "~0.1.4",
+    "cli-color": "~0.3.2",
     "gulp": "~3.6.2",
+    "gulp-clean": "^0.3.0",
+    "gulp-csslint": "~0.1.4",
     "gulp-jshint": "~1.5.5",
     "gulp-util": "~2.2.14",
-    "cli-color": "~0.3.2",
-    "request": "~2.34.0",
-    "jshint-stylish": "~0.2.0"
+    "jshint-stylish": "~0.2.0",
+    "request": "~2.34.0"
   }
 }

@@ -45,6 +45,16 @@ function comment(text) {
     return casper.echo(text, 'COMMENT');
 }
 
+/*
+ * String.prototype.contains polyfill
+ * http://goo.gl/F0x4Gg
+ */
+if ( !String.prototype.contains ) {
+    String.prototype.contains = function() {
+        return String.prototype.indexOf.apply( this, arguments ) !== -1;
+    };
+}
+
 
 /* Testing start
 --------------------------------------------------------------------------- */
@@ -201,93 +211,60 @@ casper.then( function () {
 --------------------------------------------------------------------------- */
 
 casper.then( function () {
-    var assets = this.evaluate( function () {
-        var _css_arr        = [],
-            _css_arr_name   = [],
-            _js_arr         = [],
-            _js_arr_name    = [];
+    var arr_style       = [],
+        arr_style_src   = [],
+        arr_script      = [],
+        arr_script_src  = [];
 
-        var _asset = {
+    title('Assets');
 
-            css: function () {
-                var el          = $('link[rel="stylesheet"]'),
-                    el_length   = el.length;
+    function checkAssets(asset) {
 
-                if ( !el_length ) {
-                    return false;
+        if ( casper.exists(asset) ) {
+            var asset_arr = casper.getElementsInfo(asset);
+
+            for (var i = 0; i < asset_arr.length; i++) {
+                var curr        = asset_arr[i],
+                    curr_ref    = curr.attributes.href || curr.attributes.src,
+                    filename;
+
+                if ( curr.attributes.href ) {
+                    filename = /[^//]*\.(css)/g.exec(curr_ref).toString().slice(0,-4);
+
+                    arr_style.push(filename);
+                    arr_style_src.push(curr_ref);
+                } else if ( curr.attributes.src ) {
+                    filename = /[^//]*\.(js)/g.exec(curr_ref).toString().slice(0,-3);
+
+                    arr_script.push(filename);
+                    arr_script_src.push(curr_ref);
                 }
+            };
+        }
 
-                for (var i = 0; i < el_length; i++) {
-                    var _this       = el.eq(i),
-                        _this_src   = _this.attr('href'),
-                        _this_name  = /[^//]*\.(css)/g.exec(_this_src);
+    }
 
-                    _css_arr.push(_this_src);
-                    _css_arr_name.push(_this_name);
-                }
+    function downloadAssets(assets_name, assets_src, destination) {
 
-                return {
-                    'css_array': _css_arr,
-                    'css_source': _css_arr_name
-                };
-            },
-
-            js: function () {
-                var el          = $('script[src]'),
-                    el_length   = el.length;
-
-                if ( !el_length ) {
-                    return false;
-                }
-
-                for (var i = 0; i < el_length; i++) {
-                    var _this       = el.eq(i),
-                        _this_src   = _this.attr('src'),
-                        _this_name  = /[^//]*\.(js)/g.exec(_this_src);
-
-                    _js_arr.push(_this_src);
-                    _js_arr_name.push(_this_name);
-                }
-
-                return {
-                    'js_array': _js_arr,
-                    'js_source': _js_arr_name
-                };
+        for (var i = assets_name.length - 1; i >= 0; i--) {
+            
+            if ( assets_src[i].contains('main') ) {
+                casper.download(assets_src[i], destination + assets_name[i]);
             }
 
         };
 
-        return {
-            'css': _asset.css(),
-            'js': _asset.js()
-        };
-    });
-
-    var assets_css      = assets.css.css_array,
-        assets_css_src  = assets.css.css_source,
-
-        assets_js       = assets.js.js_array,
-        assets_js_src   = assets.js.js_source;
-
-    title('Assets');
-    info('  - External stylesheet: ' + assets_css.length);
-    info('  - External script: ' + assets_js.length);
-
-    for ( var i = 0; i < assets_css.length; i++ ) {
-        var _this       = assets_css[i],
-            _this_name  = assets_css_src[i].toString().slice(0,-4);
-
-        casper.download(_this, 'css/' + _this_name);
     }
 
-    for ( var i = 0; i < assets_js.length; i++ ) {
-        var _this       = assets_js[i],
-            _this_name  = assets_js_src[i].toString().slice(0,-3);
+    checkAssets('link[rel="stylesheet"]');
+    checkAssets('script[src]');
 
-        if ( _this_name.indexOf('jquery') ) {
-            casper.download(_this, 'js/' + _this_name);
-        }
-    }
+    info('  - External stylesheet: ' + arr_style.length);
+    downloadAssets(arr_style, arr_style_src, 'css/');
+
+    info('  - External scripts: ' + arr_script.length);
+    downloadAssets(arr_script, arr_script_src, 'js/');
+
 });
 
 

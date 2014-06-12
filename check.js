@@ -233,7 +233,7 @@ casper.then( function () {
 
                     arr_style.push(filename);
                     arr_style_src.push(curr_ref);
-                } else if ( curr.attributes.src ) {
+                } else if ( curr.attributes.src && curr.attributes.src.contains('.js') ) {
                     filename = /[^//]*\.(js)/g.exec(curr_ref).toString().slice(0,-3);
 
                     arr_script.push(filename);

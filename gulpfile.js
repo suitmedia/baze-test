@@ -89,7 +89,7 @@ gulp.task('psi-desktop', function (cb) {
 });
 
 
-/* PSI Desktop
+/* PSI Mobile
 --------------------------------------------------------------------------- */
 
 gulp.task('psi-mobile', function (cb) {

@@ -16,6 +16,8 @@
     "gulp-jshint": "~1.5.5",
     "gulp-util": "~2.2.14",
     "jshint-stylish": "~0.2.0",
-    "request": "~2.34.0"
+    "psi": "0.0.3",
+    "request": "~2.34.0",
+    "yargs": "^1.2.3"
   }
 }

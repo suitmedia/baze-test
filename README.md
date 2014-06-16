@@ -22,6 +22,14 @@ baze-test
 
 `gulp lint` to run CSSLint and JSHint test after running `casperjs check.js --url=http://example.com`
 
+### PageSpeed Insights
+
+Baze Test offer `psi` task to run PageSpeed Insights test for both **desktop** and **mobile** strategy. Run `gulp psi-[strategy] --url [url to be tested]` to conduct test.
+
+example:
+`gulp psi-desktop --url http://suitmedia.com`
+`gulp psi-mobile --url http://suitmedia.com`
+
 ## Result example
 
 > casperjs check.js --url=http://suitmedia.com
@@ -37,4 +45,5 @@ baze-test
 * Images validation
 * [CSSLint](https://github.com/CSSLint/csslint)
 * [jshint](https://github.com/jshint/jshint/)
+* [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) (plugin by [Addy Osmani](https://github.com/addyosmani/psi-gulp-sample/blob/master/gulpfile.js))
 * more to come

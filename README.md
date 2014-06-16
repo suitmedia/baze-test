@@ -18,6 +18,8 @@ baze-test
 5. Sit back and you got pretty report
 6. run `gulp clean` to conduct new test
 
+**If you encounter problem on SSL page, add `--ignore-ssl-errors=true`. example: `casperjs check.js --url=http://suitmedia.com --ignore-ssl-errors=true`**
+
 ### CSSLint and JSHint
 
 `gulp lint` to run CSSLint and JSHint test after running `casperjs check.js --url=http://example.com`

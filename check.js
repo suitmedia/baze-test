@@ -9,7 +9,8 @@ var casper_options = {
 };
 
 var casper  = require('casper').create(casper_options),
-    utils   = require('utils');
+    utils   = require('utils'),
+    colorizer = require('colorizer').create('Colorizer');
 
 
 /* Helper functions
@@ -45,6 +46,11 @@ function comment(text) {
     return casper.echo(text, 'COMMENT');
 }
 
+function exitCasper() {
+    drawLine();
+    casper.exit();
+}
+
 /*
  * String.prototype.contains polyfill
  * http://goo.gl/F0x4Gg
@@ -69,11 +75,21 @@ casper.then( function () {
     if ( !casper.cli.get('url') ) {
         warn('No URL specified.');
         info('eg: casperjs check.js --url=http://suitmedia.com');
-        drawLine();
-        casper.exit();
+        exitCasper();
     }
 
-    this.echo('link: ' + this.getCurrentUrl());
+    var pageURL     = this.getCurrentUrl(),
+        pageStatus  = this.status().currentHTTPStatus;
+
+    this.echo('link\t: ' + pageURL );
+
+    if ( pageStatus === 404 ) {
+        this.echo('status\t: ' + colorizer.colorize(pageStatus, 'WARNING') );
+        exitCasper();
+    } else {
+        this.echo('status\t: ' + colorizer.colorize(pageStatus, 'TRACE') );
+    }
+
     drawLine();
 });
 

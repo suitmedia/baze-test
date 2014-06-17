@@ -228,7 +228,7 @@ casper.then( function () {
                     curr_ref    = curr.attributes.href || curr.attributes.src,
                     filename;
 
-                if ( curr.attributes.href ) {
+                if ( curr.attributes.href && curr.attributes.href.contains('.css') ) {
                     filename = /[^//]*\.(css)/g.exec(curr_ref).toString().slice(0,-4);
 
                     arr_style.push(filename);

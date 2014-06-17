@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "cli-color": "~0.3.2",
-    "gulp": "~3.6.2",
+    "gulp": "~3.8.0",
     "gulp-clean": "^0.3.0",
     "gulp-csslint": "~0.1.4",
     "gulp-jshint": "~1.5.5",

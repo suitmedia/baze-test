@@ -10,12 +10,18 @@
 var gulp        = require('gulp'),
     gutil       = require('gulp-util'),
     clean       = require('gulp-clean'),
+    yargs       = require('yargs').argv,
 
     // CSS Lint
     cssLint     = require('gulp-csslint'),
 
     // JS Hint
-    jsHint      = require('gulp-jshint');
+    jsHint      = require('gulp-jshint'),
+
+    // Page Speed Insight
+    psi         = require('psi'),
+    // Site to run PSI
+    site        = yargs.url;
 
 
 /* CSS Lint
@@ -69,6 +75,34 @@ gulp.task('js-hint', function () {
 });
 
 
+/* PSI Desktop
+--------------------------------------------------------------------------- */
+
+gulp.task('psi-desktop', function (cb) {
+
+    psi({
+        nokey: true,
+        url: site,
+        strategy: 'desktop'
+    }, cb);
+
+});
+
+
+/* PSI Mobile
+--------------------------------------------------------------------------- */
+
+gulp.task('psi-mobile', function (cb) {
+
+    psi({
+        nokey: true,
+        url: site,
+        strategy: 'mobile'
+    }, cb);
+
+});
+
+
 /* Clean
 --------------------------------------------------------------------------- */
 
@@ -79,7 +113,7 @@ gulp.task('clean', function () {
 });
 
 
-/* Lint
+/* Gulp tasks
 --------------------------------------------------------------------------- */
 
 gulp.task('lint', function () {

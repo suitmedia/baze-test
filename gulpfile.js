@@ -51,7 +51,8 @@ gulp.task('css-lint', function () {
         'vendor-prefix'             : false,    // handled by autoprefixer
         'box-model'                 : false,    // border-box specified
         'known-properties'          : false,
-        'floats'                    : false
+        'floats'                    : false,
+        'adjoining-classes'         : false     // no longer support IE6
     };
 
     return gulp

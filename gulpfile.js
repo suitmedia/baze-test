@@ -11,6 +11,7 @@ var gulp        = require('gulp'),
     gutil       = require('gulp-util'),
     clean       = require('gulp-clean'),
     yargs       = require('yargs').argv,
+    shell       = require('gulp-shell'),
 
     // CSS Lint
     cssLint     = require('gulp-csslint'),
@@ -22,6 +23,15 @@ var gulp        = require('gulp'),
     psi         = require('psi'),
     // Site to run PSI
     site        = yargs.url;
+
+
+
+/* Test
+--------------------------------------------------------------------------- */
+
+gulp.task('test', shell.task([
+    'casperjs check.js --url=' + site + ' --ignore-ssl-errors=true'
+]));
 
 
 /* CSS Lint

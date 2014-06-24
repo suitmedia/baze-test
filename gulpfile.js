@@ -26,6 +26,14 @@ var gulp        = require('gulp'),
 
 
 
+/* W3C Validator
+--------------------------------------------------------------------------- */
+
+gulp.task('w3', shell.task([
+    'casperjs w3validator.js --url=' + site + ' --ignore-ssl-errors=true'
+]));
+
+
 /* Test
 --------------------------------------------------------------------------- */
 

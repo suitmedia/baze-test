@@ -2,9 +2,9 @@
 /* Config
 --------------------------------------------------------------------------- */
 
-var casper  = require('casper').create(),
-    utils   = require('utils'),
-    colorizer = require('colorizer').create('Colorizer');
+var casper      = require('casper').create(),
+    utils       = require('utils'),
+    colorizer   = require('colorizer').create('Colorizer');
 
 
 /* Helper functions

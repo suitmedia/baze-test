@@ -27,8 +27,11 @@ baze-test
 
 example test:
 > gulp test --url http://suitmedia.com
+>
 > gulp lint
+>
 > gulp psi-desktop --url http://suitmedia.com
+>
 > gulp psi-mobile --url http://suitmedia.com
 
 ## Result example

@@ -83,8 +83,16 @@ casper.then( function () {
 
     this.echo('link\t: ' + pageURL );
 
-    if ( pageStatus === 404 ) {
-        this.echo('status\t: ' + colorizer.colorize(pageStatus, 'WARNING') );
+    if ( pageStatus !== 200 ) {
+
+        if ( pageStatus === null ) {
+            this.echo('');
+            warn('Test fail. Run gulp test --url [url] to conduct test.');
+            this.echo('');
+        } else {
+            this.echo('status\t: ' + colorizer.colorize(pageStatus, 'WARNING') );
+        }
+
         exitCasper();
     } else {
         this.echo('status\t: ' + colorizer.colorize(pageStatus, 'TRACE') );

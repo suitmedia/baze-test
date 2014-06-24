@@ -1,40 +1,37 @@
 baze-test
 =========
 
-> Automated testing tools
+> Automated testing tools with Gulp
 
 ## Requirements
 
+* [Gulp](http://gulpjs.com/)
 * [PhantomJS](http://phantomjs.org/)
 * [CasperJS](http://casperjs.org/)
-* [Gulp](http://gulpjs.com/)
 
 ## How to use
 
-1. Make sure PhantomJS and CasperJS are installed
+1. Make sure requirements are installed
 2. Clone the repository `git clone git@github.com:Suitmedia/baze-test.git`
 3. Install project dependencies with `npm install` and `bower install`
-4. Start testing remote URL by doing `casperjs check.js --url=http://example.com`
-5. Sit back and you got pretty report
-6. run `gulp clean` to conduct new test
 
-**If you encounter problem on SSL page, add `--ignore-ssl-errors=true`. example: `casperjs check.js --url=http://suitmedia.com --ignore-ssl-errors=true`**
+## Available tasks
 
-### CSSLint and JSHint
+|Tasks 									|Purpose   	                                                        |
+|---                                    |---			                                                    |
+|`gulp test --url [url]`                |Test given URL with Casperjs  			                            |
+|`gulp lint`                            |Lint CSS and JS assets                                             |
+|`gulp psi-desktop --url [url]`         |Run Google PageSpeed Insights with Desktop strategy   			    |
+|`gulp psi-mobile --url [url]`          |Run Google PageSpeed Insights with Mobile strategy   			    |
 
-`gulp lint` to run CSSLint and JSHint test after running `casperjs check.js --url=http://example.com`
 
-### PageSpeed Insights
-
-Baze Test offer `psi` task to run PageSpeed Insights test for both **desktop** and **mobile** strategy. Run `gulp psi-[strategy] --url [url to be tested]` to conduct test.
-
-example:
-`gulp psi-desktop --url http://suitmedia.com`
-`gulp psi-mobile --url http://suitmedia.com`
+example test:
+> gulp test --url http://suitmedia.com
+> gulp lint
+> gulp psi-desktop --url http://suitmedia.com
+> gulp psi-mobile --url http://suitmedia.com
 
 ## Result example
-
-> casperjs check.js --url=http://suitmedia.com
 
 ![result](http://bobby.suitmedia.net/assets/img/baze-test-1.jpg)
 

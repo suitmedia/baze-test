@@ -41,7 +41,7 @@ example test:
 
 ## Test coverage
 
-* W3C Validator
+* [W3C Validator](http://validator.w3.org/)
 * Meta tags
 * Favicon
 * Aria landmark

@@ -19,7 +19,8 @@ baze-test
 
 |Tasks 									|Purpose   	                                                        |
 |---                                    |---			                                                    |
-|`gulp test --url [url]`                |Test given URL with Casperjs  			                            |
+|`gulp w3 --url [url]`                  |Test given URL using W3C Validator                                 |
+|`gulp test --url [url]`                |Test given URL with Casperjs                                       |
 |`gulp lint`                            |Lint CSS and JS assets                                             |
 |`gulp psi-desktop --url [url]`         |Run Google PageSpeed Insights with Desktop strategy   			    |
 |`gulp psi-mobile --url [url]`          |Run Google PageSpeed Insights with Mobile strategy   			    |
@@ -40,6 +41,7 @@ example test:
 
 ## Test coverage
 
+* [W3C Validator](http://validator.w3.org/)
 * Meta tags
 * Favicon
 * Aria landmark

@@ -169,7 +169,7 @@ casper.then( function () {
 
 casper.then( function () {
     var lang            = 'html[lang]',
-        arr_charset     = ['meta[charset]', 'meta[http-equiv]'],
+        arr_charset     = ['meta[charset]', 'meta[http-equiv="Content-Type"]'],
         charsetExist    = 0;
 
     title('Internationalization');

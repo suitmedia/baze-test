@@ -12,6 +12,7 @@ var gulp        = require('gulp'),
     clean       = require('gulp-clean'),
     yargs       = require('yargs').argv,
     shell       = require('gulp-shell'),
+    fs          = require('fs'),
 
     // CSS Lint
     cssLint     = require('gulp-csslint'),
@@ -46,17 +47,51 @@ gulp.task('test', shell.task([
 --------------------------------------------------------------------------- */
 
 var cssLintReporter = function (file) {
+    var lint_result = '',
+        output      = {
+            dir : 'results',
+            path: 'results/CSSLint.txt'
+        },
+        tmp;
+
+    function writeReport(message, doubleLine) {
+        if ( doubleLine ) {
+            return lint_result += message + '\n\n';
+        }
+
+        return lint_result += message + '\n';
+    }
+
+    function saveReport() {
+        fs.writeFile(output.path, lint_result, function (err) {
+            if ( err ) return console.log(err);
+        });
+    }
+
     gutil.log();
     gutil.log(gutil.colors.magenta(file.path));
     gutil.log('--------------------------------------------------\n');
 
     file.csslint.results.forEach(function(result) {
-        gutil.log(gutil.colors.gray('line: ' + result.error.line));
-        gutil.log('\t' + gutil.colors.blue(result.error.message));
+        tmp = 'line: ' + result.error.line;
+        gutil.log(gutil.colors.gray(tmp));
+        writeReport(tmp, false);
+
+        tmp = result.error.message;
+        gutil.log('\t' + gutil.colors.blue(tmp));
+        writeReport(tmp, true);
+
         gutil.log('');
     });
 
-    gutil.log('CSS lint result: ' + gutil.colors.red('✖ ' + file.csslint.errorCount + ' problems'));
+    tmp = file.csslint.errorCount + ' problems';
+    gutil.log('CSS lint result: ' + gutil.colors.red('✖ ' + tmp));
+    writeReport('CSS lint result: ' + tmp, false);
+
+    fs.mkdir(output.dir, function (e) {
+        saveReport();
+    });
+
 };
 
 gulp.task('css-lint', function () {
@@ -127,7 +162,7 @@ gulp.task('psi-mobile', function (cb) {
 
 gulp.task('clean', function () {
     return gulp
-        .src(['./css/', './js/'], {read: false})
+        .src(['./css/', './js/', './results/'], {read: false})
         .pipe(clean());
 });
 

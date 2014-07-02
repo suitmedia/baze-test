@@ -24,7 +24,7 @@ baze-test
 |`gulp lint`                            |Lint CSS* and JS assets                                            |
 |`gulp psi-desktop --url [url]`         |Run Google PageSpeed Insights with Desktop strategy   			    |
 |`gulp psi-mobile --url [url]`          |Run Google PageSpeed Insights with Mobile strategy   			    |
-CSS Lint will generate report located at `results/CSSLint.txt`
+*CSS Lint will generate report located at `results/CSSLint.txt`
 
 
 example test:

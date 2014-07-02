@@ -21,9 +21,10 @@ baze-test
 |---                                    |---			                                                    |
 |`gulp w3 --url [url]`                  |Test given URL using W3C Validator                                 |
 |`gulp test --url [url]`                |Test given URL with Casperjs                                       |
-|`gulp lint`                            |Lint CSS and JS assets                                             |
+|`gulp lint`                            |Lint CSS* and JS assets                                            |
 |`gulp psi-desktop --url [url]`         |Run Google PageSpeed Insights with Desktop strategy   			    |
 |`gulp psi-mobile --url [url]`          |Run Google PageSpeed Insights with Mobile strategy   			    |
+CSS Lint will generate report located at `results/CSSLint.txt`
 
 
 example test:

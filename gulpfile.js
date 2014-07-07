@@ -13,6 +13,7 @@ var gulp        = require('gulp'),
     yargs       = require('yargs').argv,
     shell       = require('gulp-shell'),
     fs          = require('fs'),
+    mapStream   = require('map-stream'),
 
     // CSS Lint
     cssLint     = require('gulp-csslint'),
@@ -119,12 +120,48 @@ gulp.task('css-lint', function () {
 /* JS Hint
 --------------------------------------------------------------------------- */
 
+var generateReport = mapStream( function (file, cb) {
+    var msg     = '',
+        i       = 0,
+        output  = {
+            dir: 'results',
+            path: 'results/JSHint.txt'
+        };
+
+    function writeReport() {
+        fs.writeFile(output.path , msg, function (err) {
+            if ( err ) return console.log(err);
+        });
+    }
+
+    if ( !file.jshint.success ) {
+
+        file.jshint.results.forEach( function (err) {
+            if ( err ) {
+                msg += 'line ' + err.error.line + '\n';
+                msg += err.error.reason + '\n\n';
+                i   += 1;
+            }
+        });
+
+        msg += 'JSHint results: ' + i + ' problems';
+ 
+        fs.mkdir(output.dir, function (e) {
+            writeReport();
+        });
+
+    }
+
+    cb(null, file);
+});
+
 gulp.task('js-hint', function () {
 
     return gulp
         .src('./js/*.js')
         .pipe(jsHint())
-        .pipe(jsHint.reporter('jshint-stylish'));
+        .pipe(jsHint.reporter('jshint-stylish'))
+        .pipe(generateReport);
 
 });
 

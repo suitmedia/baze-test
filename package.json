@@ -17,6 +17,7 @@
     "gulp-shell": "^0.2.7",
     "gulp-util": "~2.2.14",
     "jshint-stylish": "~0.2.0",
+    "map-stream": "^0.1.0",
     "psi": "0.0.3",
     "request": "~2.34.0",
     "yargs": "^1.2.3"

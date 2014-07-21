@@ -34,6 +34,20 @@ var exitCasper = function () {
     casper.exit();
 };
 
+var contains = function () {
+    return String.prototype.indexOf.apply( this, arguments ) !== -1;
+};
+
+/*
+ * String.prototype.contains polyfill
+ * http://goo.gl/F0x4Gg
+ */
+if ( !String.prototype.contains ) {
+    String.prototype.contains = function() {
+        return String.prototype.indexOf.apply( this, arguments ) !== -1;
+    };
+}
+
 exports.clearScreen = clearScreen;
 exports.drawLine    = drawLine;
 exports.title       = title;
@@ -42,3 +56,4 @@ exports.info        = info;
 exports.warn        = warn;
 exports.comment     = comment;
 exports.exitCasper  = exitCasper;
+exports.contains    = contains;

@@ -10,21 +10,7 @@ var casper      = require('casper').create(casper_options),
     utils       = require('utils'),
     colorizer   = require('colorizer').create('Colorizer'),
     helper      = require('./helper');
-
-
-/* Helper functions
---------------------------------------------------------------------------- */
-
-/*
- * String.prototype.contains polyfill
- * http://goo.gl/F0x4Gg
- */
-if ( !String.prototype.contains ) {
-    String.prototype.contains = function() {
-        return String.prototype.indexOf.apply( this, arguments ) !== -1;
-    };
-}
-
+    
 
 /* Testing start
 --------------------------------------------------------------------------- */

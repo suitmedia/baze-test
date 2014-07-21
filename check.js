@@ -8,46 +8,12 @@ var casper_options = {
 
 var casper      = require('casper').create(casper_options),
     utils       = require('utils'),
-    colorizer   = require('colorizer').create('Colorizer');
+    colorizer   = require('colorizer').create('Colorizer'),
+    helper      = require('./helper');
 
 
 /* Helper functions
 --------------------------------------------------------------------------- */
-
-function clearScreen() {
-    for (var i = 10 - 1; i >= 0; i--) {
-        console.log('\n');
-    }
-}
-
-function drawLine() {
-    console.log('-------------------------------------------------------');
-}
-
-function title(text) {
-    return casper.echo('# ' + text, 'PARAMETER');
-}
-
-function param(text) {
-    return casper.echo(text, 'PARAMETER');
-}
-
-function info(text) {
-    return casper.echo(text, 'INFO');
-}
-
-function warn(text) {
-    return casper.echo(text, 'WARNING');
-}
-
-function comment(text) {
-    return casper.echo(text, 'COMMENT');
-}
-
-function exitCasper() {
-    drawLine();
-    casper.exit();
-}
 
 /*
  * String.prototype.contains polyfill
@@ -66,14 +32,14 @@ if ( !String.prototype.contains ) {
 casper.start(casper.cli.get('url'));
 
 casper.then( function () {
-    clearScreen();
-    drawLine();
+    helper.clearScreen();
+    helper.drawLine();
     this.echo('Suitmedia web validation');
     
     if ( !casper.cli.get('url') ) {
-        warn('No URL specified.');
-        info('eg: casperjs check.js --url=http://suitmedia.com');
-        exitCasper();
+        helper.warn('No URL specified.');
+        helper.info('eg: casperjs check.js --url=http://suitmedia.com');
+        helper.exitCasper();
     }
 
     var pageURL     = this.getCurrentUrl(),
@@ -85,18 +51,18 @@ casper.then( function () {
 
         if ( pageStatus === null ) {
             this.echo('');
-            warn('Test fail. Run gulp test --url [url] to conduct test.');
+            helper.warn('Test fail. Run gulp test --url [url] to conduct test.');
             this.echo('');
         } else {
             this.echo('status\t: ' + colorizer.colorize(pageStatus, 'WARNING') );
         }
 
-        exitCasper();
+        helper.exitCasper();
     } else {
         this.echo('status\t: ' + colorizer.colorize(pageStatus, 'TRACE') );
     }
 
-    drawLine();
+    helper.drawLine();
 });
 
 
@@ -107,18 +73,18 @@ casper.then( function () {
     var meta_desc   = 'meta[name="description"]',
         meta_vp     = 'meta[name="viewport"]';
 
-    title('Necessary meta tag');
+    helper.title('Necessary meta tag');
 
     if ( this.exists(meta_desc) ) {
-        info('  - Description: ' + this.getElementAttribute(meta_desc, 'content'));
+        helper.info('  - Description: ' + this.getElementAttribute(meta_desc, 'content'));
     } else {
-        warn('  - Description: not specified');
+        helper.warn('  - Description: not specified');
     }
 
     if ( this.exists(meta_vp) ) {
-        info('  - Viewport: ' + this.getElementAttribute(meta_vp, 'content'));
+        helper.info('  - Viewport: ' + this.getElementAttribute(meta_vp, 'content'));
     } else {
-        warn('  - Viewport: not specified');
+        helper.warn('  - Viewport: not specified');
     }
 });
 
@@ -129,14 +95,14 @@ casper.then( function () {
 casper.then( function () {
     var favicon = 'link[rel*="icon"]';
 
-    title('Favicon');
+    helper.title('Favicon');
 
     if ( this.exists(favicon) ) {
         var favicon_href = this.getElementAttribute(favicon, 'href');
 
-        info('  - Favicon is specified: ' + favicon_href);
+        helper.info('  - Favicon is specified: ' + favicon_href);
     } else {
-        warn('  - No favicon specified');
+        helper.warn('  - No favicon specified');
     }
 });
 
@@ -148,15 +114,15 @@ casper.then( function () {
     var arr_role        = ['banner', 'main', 'contentinfo', 'navigation', 'search'],
         arr_role_length = arr_role.length;
 
-    title('ARIA Landmark');
+    helper.title('ARIA Landmark');
 
     for (var i = arr_role_length - 1; i >= 0; i--) {
         var _current = '[role="' + arr_role[i] + '"]';
 
         if ( this.exists(_current) ) {
-            info('  - ' + arr_role[i]);
+            helper.info('  - ' + arr_role[i]);
         } else {
-            warn('  - ' + arr_role[i]);
+            helper.warn('  - ' + arr_role[i]);
         }
     }
 });
@@ -170,14 +136,14 @@ casper.then( function () {
         arr_charset     = ['meta[charset]', 'meta[http-equiv="Content-Type"]'],
         charsetExist    = 0;
 
-    title('Internationalization');
+    helper.title('Internationalization');
 
     if ( this.exists(lang) ) {
         var content = this.getElementAttribute(lang, 'lang');
 
-        info('  - Language is specified: ' + content);
+        helper.info('  - Language is specified: ' + content);
     } else {
-        warn('  - Language is not specified');
+        helper.warn('  - Language is not specified');
     }
 
     for (var i = arr_charset.length - 1; i >= 0; i--) {
@@ -192,14 +158,14 @@ casper.then( function () {
                 curr_opt2   = this.getElementAttribute(curr, 'content'),
                 content = curr_opt1 || curr_opt2;
 
-            info('  - Character encoding is specified: ' + content);
+            helper.info('  - Character encoding is specified: ' + content);
             charsetExist = 1;
             break;
         }
     }
 
     if ( charsetExist === 0 ) {
-        warn('  - Character encoding is not specified');
+        helper.warn('  - Character encoding is not specified');
     }
 });
 
@@ -213,7 +179,7 @@ casper.then( function () {
 
     if ( !img.length ) return;
 
-    title('Images');
+    helper.title('Images');
 
     for (var i = img.length - 1; i >= 0; i--) {
         var curr        = img[i],
@@ -224,8 +190,8 @@ casper.then( function () {
         }
     }
 
-    info('  - Total images: ' + img.length);
-    warn('  - Images with no alt text: ' + no_alt);
+    helper.info('  - Total images: ' + img.length);
+    helper.warn('  - Images with no alt text: ' + no_alt);
 });
 
 
@@ -238,7 +204,7 @@ casper.then( function () {
         arr_script      = [],
         arr_script_src  = [];
 
-    title('Assets');
+    helper.title('Assets');
 
     function checkAssets(asset) {
 
@@ -281,10 +247,10 @@ casper.then( function () {
     checkAssets('link[rel="stylesheet"]');
     checkAssets('script[src]');
 
-    info('  - External stylesheet: ' + arr_style.length);
+    helper.info('  - External stylesheet: ' + arr_style.length);
     downloadAssets(arr_style, arr_style_src, 'css/');
 
-    info('  - External scripts: ' + arr_script.length);
+    helper.info('  - External scripts: ' + arr_script.length);
     downloadAssets(arr_script, arr_script_src, 'js/');
 
 });
@@ -294,7 +260,7 @@ casper.then( function () {
 --------------------------------------------------------------------------- */
 
 casper.then( function () {
-    drawLine();
+    helper.drawLine();
 });
 
 

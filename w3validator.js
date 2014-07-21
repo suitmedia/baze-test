@@ -4,46 +4,12 @@
 
 var casper      = require('casper').create(),
     utils       = require('utils'),
-    colorizer   = require('colorizer').create('Colorizer');
+    colorizer   = require('colorizer').create('Colorizer'),
+    helper      = require('./helper');
 
 
 /* Helper functions
 --------------------------------------------------------------------------- */
-
-function clearScreen() {
-    for (var i = 10 - 1; i >= 0; i--) {
-        console.log('\n');
-    }
-}
-
-function drawLine() {
-    console.log('-------------------------------------------------------');
-}
-
-function title(text) {
-    return casper.echo('# ' + text, 'PARAMETER');
-}
-
-function param(text) {
-    return casper.echo(text, 'PARAMETER');
-}
-
-function info(text) {
-    return casper.echo(text, 'INFO');
-}
-
-function warn(text) {
-    return casper.echo(text, 'WARNING');
-}
-
-function comment(text) {
-    return casper.echo(text, 'COMMENT');
-}
-
-function exitCasper() {
-    drawLine();
-    casper.exit();
-}
 
 /*
  * String.prototype.contains polyfill
@@ -62,24 +28,24 @@ if ( !String.prototype.contains ) {
 var url = casper.cli.get('url');
 
 if ( !url && url === '' ) {
-    clearScreen();
-    drawLine();
+    helper.clearScreen();
+    helper.drawLine();
 
-    warn('Please specify the URL.');
-    warn('e.g: casperjs w3validator.js --url=http://suitmedia.com');
+    helper.warn('Please specify the URL.');
+    helper.warn('e.g: casperjs w3validator.js --url=http://suitmedia.com');
     
-    exitCasper();
+    helper.exitCasper();
 }
 
 casper.start('http://validator.w3.org/check?uri=' + url);
 
 casper.then( function () {
-    clearScreen();
+    helper.clearScreen();
 
-    drawLine();
+    helper.drawLine();
     this.echo('W3C Validator');
-    info('URL: ' + url);
-    drawLine();
+    helper.info('URL: ' + url);
+    helper.drawLine();
 });
 
 casper.then( function () {
@@ -106,7 +72,7 @@ casper.then( function () {
             line_error  = line.substring(0, line.indexOf(','));
 
         this.echo( line_error );
-        warn( errors_msg[i].text );
+        helper.warn( errors_msg[i].text );
         this.echo('');
     }
 

@@ -4,13 +4,11 @@
 
 var casper_options = {
     clientScripts: ['./bower_components/jquery/dist/jquery.min.js']
-  // , verbose: true
-  // , logLevel: 'debug'
 };
 
-var casper  = require('casper').create(casper_options),
-    utils   = require('utils'),
-    colorizer = require('colorizer').create('Colorizer');
+var casper      = require('casper').create(casper_options),
+    utils       = require('utils'),
+    colorizer   = require('colorizer').create('Colorizer');
 
 
 /* Helper functions

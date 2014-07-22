@@ -9,7 +9,7 @@
 
 var gulp        = require('gulp'),
     gutil       = require('gulp-util'),
-    clean       = require('gulp-clean'),
+    del         = require('del'),
     yargs       = require('yargs').argv,
     shell       = require('gulp-shell'),
     fs          = require('fs'),
@@ -198,9 +198,9 @@ gulp.task('psi-mobile', function (cb) {
 --------------------------------------------------------------------------- */
 
 gulp.task('clean', function () {
-    return gulp
-        .src(['./css/', './js/', './results/'], {read: false})
-        .pipe(clean());
+    del(['./css/', './js/', './results/'], function (err) {
+        console.log('Directory cleaned.');
+    });
 });
 
 

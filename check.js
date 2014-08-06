@@ -120,12 +120,13 @@ casper.then( function () {
 casper.then( function () {
     var lang            = 'html[lang]',
         arr_charset     = ['meta[charset]', 'meta[http-equiv="Content-Type"]'],
-        charsetExist    = 0;
+        charsetExist    = 0,
+        content;
 
     helper.title('Internationalization');
 
     if ( this.exists(lang) ) {
-        var content = this.getElementAttribute(lang, 'lang');
+        content = this.getElementAttribute(lang, 'lang');
 
         helper.info('  - Language is specified: ' + content);
     } else {
@@ -141,8 +142,9 @@ casper.then( function () {
              *  http://goo.gl/2hpW3P
              */ 
             var curr_opt1   = this.getElementAttribute(curr, 'charset'),
-                curr_opt2   = this.getElementAttribute(curr, 'content'),
-                content = curr_opt1 || curr_opt2;
+                curr_opt2   = this.getElementAttribute(curr, 'content');
+            
+            content = curr_opt1 || curr_opt2;
 
             helper.info('  - Character encoding is specified: ' + content);
             charsetExist = 1;
@@ -213,7 +215,7 @@ casper.then( function () {
                     arr_script.push(filename);
                     arr_script_src.push(curr_ref);
                 }
-            };
+            }
         }
 
     }
@@ -226,7 +228,7 @@ casper.then( function () {
                 casper.download(assets_src[i], destination + assets_name[i]);
             }
 
-        };
+        }
 
     }
 

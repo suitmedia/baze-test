@@ -23,8 +23,12 @@ baze-test
 |`gulp test --url [url]`                |Test given URL with Casperjs                                       |
 |`gulp lint`                            |Lint CSS and JS assets                                             |
 |`gulp psi-desktop --url [url]`         |Run Google PageSpeed Insights with Desktop strategy   			    |
-|`gulp psi-mobile --url [url]`          |Run Google PageSpeed Insights with Mobile strategy   			    |
-*CSS Lint and JSHint will generate report located at `results/`
+|`gulp psi-mobile --url [url]`          |Run Google PageSpeed Insights with Mobile strategy                 |
+|`gulp clean`                           |Remove downloaded CSS and JS files from previous test.     	    |
+**NOTES**
+- Running `gulp test` will automatically download CSS and JS file which contains 'main' in the filename. Downloaded CSS file will be stored into `css/` dan JS file into `js/` directory.
+- CSS Lint and JSHint will generate report located at `results/`.
+- Running `gulp clean` will remove `results/`, `css/`, and `js/` directory.
 
 
 example test:

@@ -106,7 +106,9 @@ gulp.task('css-lint', function () {
         'box-model'                 : false,    // border-box specified
         'known-properties'          : false,
         'floats'                    : false,
-        'adjoining-classes'         : false     // no longer support IE6
+        'adjoining-classes'         : false,    // no longer support IE6,
+        'unqualified-attributes'    : false,
+        'fallback-colors'           : false
     };
 
     return gulp

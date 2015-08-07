@@ -39,13 +39,15 @@ casper.then( function () {
 
     if ( !title.contains('Invalid') ) return;
 
-    var errors              = this.getElementsInfo('.msg_err'),
-        errors_msg          = this.getElementsInfo('.msg_err .msg'),
-        errors_line         = this.getElementsInfo('.msg_err em'),
+    var errors              = this.getElementsInfo('.error'),
+        errors_msg          = this.getElementsInfo('.error p:first-child span'),
+        errors_line         = this.getElementsInfo('.error .location .first-line'),
+        errors_code         = this.getElementsInfo('.error .extract'),
 
-        warnings            = this.getElementsInfo('.msg_warn'),
-        warnings_msg        = this.getElementsInfo('.msg_warn .msg'),
-        warnings_line       = this.getElementsInfo('.msg_warn em'),
+        warnings            = this.getElementsInfo('.warning'),
+        warnings_msg        = this.getElementsInfo('.warning span'),
+        warnings_line       = this.getElementsInfo('.warning .location .first-line'),
+        warnings_code       = this.getElementsInfo('.warning .extract'),
 
         errors_count        = errors.length,
         warnings_count      = warnings.length,
@@ -54,11 +56,10 @@ casper.then( function () {
         warnings_result;
 
     for ( var i = 0; i < errors_count; i++ ) {
-        var line        = errors_line[i].text,
-            line_error  = line.substring(0, line.indexOf(','));
 
-        this.echo( line_error );
-        helper.warn( errors_msg[i].text );
+        this.echo( (i+1) + "." );
+        helper.warn( "Error : " + errors_msg[i].text );
+        this.echo( "Line  : " + errors_line[i].text );
         this.echo('');
     }
 

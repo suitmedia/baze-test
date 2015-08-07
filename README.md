@@ -6,7 +6,7 @@ baze-test
 ## Requirements
 
 * [Gulp](http://gulpjs.com/)
-* [PhantomJS](http://phantomjs.org/)
+* [PhantomJS](http://phantomjs.org/) v1.9.8
 * [CasperJS](http://casperjs.org/)
 
 ## How to use
